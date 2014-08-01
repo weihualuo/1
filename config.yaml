@@ -1,0 +1,13 @@
+name: invt
+version: 1
+
+
+libraries:
+- name: "django"
+  version: "1.5"
+- name: "lxml"
+  version: "2.3.4"
+
+handlers:
+- url: /m
+  static_dir: static/
