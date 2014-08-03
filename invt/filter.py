@@ -1,7 +1,6 @@
 
 from rest_framework import filters
 from django.db.models import Q
-from django.utils import timezone
 from utils import default_int
 
 
