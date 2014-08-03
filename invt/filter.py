@@ -5,7 +5,7 @@ from django.utils import timezone
 from utils import default_int
 
 
-class MyFilterBackend(filters.BaseFilterBackend):
+class CreateFilterBackend(filters.BaseFilterBackend):
 
     def filter_queryset(self, request, queryset, view):
 
