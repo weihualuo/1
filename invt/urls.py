@@ -2,9 +2,12 @@ from django.conf.urls import patterns, include, url
 
 from rest_framework import routers
 from invt.views import MetaView, Information, Task
+from users.views import UserViewSet, AuthView
+from templates.views import TemplateViewSet
 
 router = routers.SimpleRouter(trailing_slash=False)
-# router.register(r'advices', AdviceViewSet, 'advices')
+router.register(r'users', UserViewSet, 'user')
+router.register(r'templates', TemplateViewSet, 'templates')
 # router.register(r'(?P<name>\w+)/(?P<id>\d+)/comments', CommentViewSet, 'comments')
 
 from django.contrib import admin
@@ -20,6 +23,7 @@ urlpatterns = patterns('',
     url(r'^api/meta$', ensure_csrf_cookie(MetaView.as_view()), name='meta'),
     url(r'^info/(?P<app>\w+)/(?P<item>\w+)$', Information.as_view(), name='info'),
     url(r'^task/(?P<id>\w+)$', Task.as_view(), name='task'),
+    url(r'^auth/(?P<id>\w+)$', AuthView.as_view(), name='auth'),
 )
 
 from invt import settings

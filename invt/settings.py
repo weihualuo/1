@@ -33,6 +33,8 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'invt',
     'rest_framework',
+    'templates',
+    'users',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -140,4 +142,5 @@ REST_FRAMEWORK = {
 CORS_ALLOW_CREDENTIALS = True
 CORS_ORIGIN_WHITELIST = (
     'localhost:8080',
+    'localhost:63343',
 )

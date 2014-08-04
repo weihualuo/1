@@ -159,7 +159,7 @@ class ImageHelper():
 
         width, height = self.size
         if width < self.MIN_SIZE or height < self.MIN_SIZE:
-            raise ImageSaveError("invalid image dimension")
+            raise StandardError("invalid image dimension")
         filename = self.obj.get_name(0)
         data, (width, height) = self.resize(self.MAX_SIZE, crop)
         self.image.save(filename, data, save=False)
