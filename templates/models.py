@@ -1,9 +1,10 @@
 import re, os
 from django.db import models
-from django.utils.translation import ugettext as _
+from django.utils.translation import ugettext_lazy as _
 from django.contrib.auth.models import User
 from invt import settings
 from utils.thumbnail import ImageHelper
+from django.utils.crypto import get_random_string
 
 class Style(models.Model):
     cn = models.CharField(max_length=20, verbose_name=_("Style"))
@@ -36,6 +37,9 @@ class TemplateImageHelper(ImageHelper):
         20: (105, 105)
     }
 
+
+API_BASE = 'api/templates/'
+URI = 'templates'
 # Create your models here.
 class Template(models.Model):
 
@@ -62,7 +66,7 @@ class Template(models.Model):
     def get_image_path(self, filename):
         #Let it raise a error if not match
         m = re.search(r'-(\d+)\.', filename)
-        return os.path.join('t', m.group[1], filename)
+        return os.path.join('t', m.group(1), filename)
 
     def get_name(self, seq):
         s = self.style.en if self.style else ''
@@ -94,17 +98,17 @@ class Template(models.Model):
             self.meta = 'U' + str(get_random_string(20))
             helper.save_init()
 
-        super(Image, self).save(*args, **kwargs)
+        super(Template, self).save(*args, **kwargs)
 
         if helper:
             from utils.async import add_task
             import pylibmc as memcache
             #from django.utils.crypto import get_random_string
             mc = memcache.Client()
-            base = 'api/templates/'+str(self.pk)+'/thumb?seq='
+            base = API_BASE + str(self.pk) + '/thumb?seq='
             thumbs = self.thumbs
             for i in thumbs:
-                key = 'photos'+str(self.pk)+'-'+str(i)
+                key = URI + str(self.pk) + '-' + str(i)
                 value = get_random_string(8)
                 mc.set(key, value)
                 url = base + str(i) + '&token=' + value

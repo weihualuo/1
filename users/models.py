@@ -1,10 +1,10 @@
-# coding:utf8
+
 from django.db import models
 from django.contrib.auth.models import User
 from invt import settings
 from utils.thumbnail import ImageHelper
 from django.utils.crypto import get_random_string
-from django.utils.translation import ugettext as _
+from django.utils.translation import ugettext_lazy as _
 
 EndUser = User
 
@@ -15,6 +15,13 @@ class UserImageHelper(ImageHelper):
     SIZES = {}
 
 class Profile(models.Model):
+
+    def __unicode__(self):
+        return "%s" % self.user
+
+    class Meta:
+        verbose_name = _('Profile')
+        verbose_name_plural = _('Profiles')
 
     #Called by ImageHelper on save
     def get_name(self, seq):
@@ -43,13 +50,6 @@ class Profile(models.Model):
             UserImageHelper(self).save_init(True)
 
         super(Profile, self).save(*args, **kwargs)
-
-    def __unicode__(self):
-        return "%s" % self.user
-
-    class Meta:
-        verbose_name = _('user profile')
-        verbose_name_plural = 'user profiles'
 
 class OAuth(models.Model):
 

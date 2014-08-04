@@ -84,15 +84,15 @@ class MobileRedirectMiddleware(object):
     def process_request(self, request):
 
         DEBUG_INFO = False
-        #DEBUG_INFO = True
+        DEBUG_INFO = True
         if DEBUG_INFO:
             print "headers:"
             for key in request.META:
                 if key.startswith('HTTP'):
                     print key, request.META[key]
             print 'content-type', request.META.get('CONTENT_TYPE')
-            print 'body:'
-            print request.body
+            # print 'body:'
+            # print request.body
 
         user_agent = request.META.get('HTTP_USER_AGENT', '')
         is_mobile = parser.detect_mobile(user_agent)

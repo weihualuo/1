@@ -6,8 +6,8 @@ from invt.views import ImageListViewSet
 
 class TemplateViewSet(ImageListViewSet):
 
-    base = 'api/templates/'
-    uri = 'templates'
+    base = API_BASE
+    uri = URI
 
     model = Template
     serializer_class = TemplateSerializer
